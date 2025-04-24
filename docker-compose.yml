@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  order-service:
+    container_name: order-service
+    image: order-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      postgresql_database:
+        condition: service_healthy
+    networks:
+      - application-network
+
+  postgresql_database:
+    image: postgres:latest
+    container_name: postgresql_database
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "mlisena"
+      POSTGRES_PASSWORD: "A8424628"
+      POSTGRES_DB: "order_db"
+    networks:
+      - application-network
+    volumes:
+      - postgresql_database_data:/data/db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U mlisena -d order_db" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  application-network:
+    external: true
+
+volumes:
+  postgresql_database_data:

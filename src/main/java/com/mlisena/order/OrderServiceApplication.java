@@ -1,4 +1,4 @@
-package com.mlisena.order_service;
+package com.mlisena.order;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
