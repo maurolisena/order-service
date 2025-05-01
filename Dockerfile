@@ -10,5 +10,5 @@ WORKDIR /app
 COPY --from=build /app/target/order-service-0.0.1-SNAPSHOT.jar app.jar
 
 # Exponer puerto y ejecutar la aplicación
-EXPOSE 8083
+EXPOSE 9003
 ENTRYPOINT ["java", "-jar", "app.jar"]
