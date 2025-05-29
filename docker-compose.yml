@@ -10,34 +10,9 @@ services:
       - "9003:9003"
     environment:
       - SPRING_PROFILES_ACTIVE=dev
-    depends_on:
-      postgresql_database:
-        condition: service_healthy
     networks:
       - backend
-
-  postgresql_database:
-    image: postgres:latest
-    container_name: postgresql_database
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: "mlisena"
-      POSTGRES_PASSWORD: "A8424628"
-      POSTGRES_DB: "order_db"
-    networks:
-      - backend
-    volumes:
-      - postgresql_database_data:/data/db
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U mlisena -d order_db" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
 networks:
   backend:
     external: true
-
-volumes:
-  postgresql_database_data:
